@@ -1,15 +1,52 @@
-<a href="/users">Пользователи</a>
+
+<h1>Users</h1>
+<?php if (count($flash) > 0) : ?>
+    <ul>
+        <?php foreach ($flash as $messages) : ?>
+            <?php foreach ($messages as $message) : ?>
+                <li style="color:green;"><?= $message ?></li>
+            <?php endforeach ?>
+        <?php endforeach ?>
+    </ul>
+<?php endif ?>
 <form action="/users" method="get">
     <input type="search" name="term" value="<?= htmlspecialchars($term) ?>" />
     <input type="submit" value="Search" />
 </form>
 
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+
+
 <table>
-    <?php foreach ($filteredNames as $key => $value): ?>
-        <tr>
-            <td>
-                ID : <?= $value['user']['id'] ?>;  Nickname : <?= $value['user']['nickname'] ?>;   Email : <?= $value['user']['email'] ?>
-            </td>
-        </tr>
-    <?php endforeach ?>
+    <tr>
+
+        <th>ID</th>
+        <th>Nickname</th>
+        <th>Email</th>
+    </tr>
+            <?php foreach ($filteredNames as $name) : ?>
+    <tr>
+                    <td><?= htmlspecialchars($name['id']) ?></td>
+                    <td><?= htmlspecialchars($name['nickname']) ?></td>
+                    <td><?= htmlspecialchars($name['email']) ?></td>
+    </tr>
+            <?php endforeach ?>
 </table>
+
