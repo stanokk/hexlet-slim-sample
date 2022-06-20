@@ -14,7 +14,7 @@ class UserRepository
         return array_values($_SESSION);
     }
 
-    public function find(int $id)
+    public function find(string $id)
     {
         if (!isset($_SESSION[$id])) {
             throw new \Exception("Wrong user id: {$id}");
@@ -25,12 +25,14 @@ class UserRepository
 
     public function save(array $user)
     {
+        if (!($user['id'])) {
+            $user['id'] = uniqid();
+        }
+        $_SESSION[$user['id']] = $user;
         $file = 'people.json';
         $current = file_get_contents($file);
-        $user['id'] = uniqid();
-        $_SESSION[$user['id']] = $user;
         empty($current) ? $updated = [] : $updated = json_decode($current, true);
-        $updated[] = $user;
+        $updated[$user['id']] = $user;
         file_put_contents($file, json_encode($updated));
     }
 }
