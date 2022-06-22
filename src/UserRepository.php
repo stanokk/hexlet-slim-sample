@@ -16,6 +16,8 @@ class UserRepository
 
     public function find(string $id)
     {
+        $users = json_decode(file_get_contents('people.json'), true);
+        $_SESSION[$id] = $users[$id];
         if (!isset($_SESSION[$id])) {
             throw new \Exception("Wrong user id: {$id}");
         }
